@@ -30,7 +30,7 @@
             width: 100%;
             margin-bottom: 20px;
             opacity: 0;
-            animation: fadeIn 1s forwards; /* Добавление анимации для плавного появления */
+            animation: fadeIn 1s forwards;
         }
 
         @keyframes fadeIn {
@@ -46,11 +46,11 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 20px;
-            transition: transform 0.3s ease; /* Плавное приближение при наведении */
+            transition: transform 0.3s ease;
         }
 
         h1:hover {
-            transform: scale(1.05); /* Легкое приближение */
+            transform: scale(1.05);
         }
 
         p {
@@ -60,7 +60,7 @@
         }
 
         p:hover {
-            transform: scale(1.05); /* Легкое приближение */
+            transform: scale(1.05);
         }
 
         .big-button {
@@ -132,7 +132,7 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease; /* Плавное приближение для списка */
+            transition: transform 0.3s ease;
         }
 
         ul li {
@@ -140,7 +140,7 @@
         }
 
         ul:hover {
-            transform: scale(1.02); /* Легкое приближение при наведении на весь список */
+            transform: scale(1.02);
         }
 
         #generatedKey {
@@ -163,9 +163,69 @@
             margin-left: 10px;
         }
 
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-container.show {
+            display: flex;
+        }
+
+        .loading-container .content {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .loading-container iframe {
+            margin: 10px 0;
+        }
+
+        .loading-container iframe:first-child {
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Рекламный контейнер -->
+    <div id="loadingContainer" class="loading-container">
+        <div class="content">
+            <p>Подождите...</p>
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '816696d8a56c828b6fe0d16c5b3383e4',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/816696d8a56c828b6fe0d16c5b3383e4/invoke.js"></script>
+
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'e99622ccb12bff35f5d89f172ed51fdb',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/e99622ccb12bff35f5d89f172ed51fdb/invoke.js"></script>
+        </div>
+    </div>
+
     <div class="container" id="startSection">
         <h1>Давайте начнем играть в SlavikVanilla!</h1>
         <p>Нажмите на кнопку, чтобы начать!</p>
@@ -201,8 +261,18 @@
 
     <script>
         document.getElementById("startButton").addEventListener("click", function() {
-            document.getElementById("startSection").classList.add("hidden");  // Скрываем начальный текст
+            // Показ рекламного контейнера
+            const loadingContainer = document.getElementById("loadingContainer");
+            loadingContainer.classList.add("show");
+
+            // Скрываем начальный экран
+            document.getElementById("startSection").classList.add("hidden");
             document.getElementById("rulesSection").classList.remove("hidden");
+
+            // Ожидаем 5 секунд, потом скрываем рекламу
+            setTimeout(function() {
+                loadingContainer.classList.remove("show");
+            }, 5000);  // 5000 миллисекунд (5 секунд)
         });
 
         document.getElementById("agreeCheckbox").addEventListener("change", function() {
