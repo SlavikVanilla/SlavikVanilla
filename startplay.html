@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начать играть</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://i.ibb.co/sKT9Hw9/photo-2024-11-11-14-19-18.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards; /* Добавление анимации для плавного появления */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease; /* Плавное приближение при наведении */
+        }
+
+        h1:hover {
+            transform: scale(1.05); /* Легкое приближение */
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        p:hover {
+            transform: scale(1.05); /* Легкое приближение */
+        }
+
+        .big-button {
+            padding: 14px 28px;
+            background-color: #FF5722;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: transform 0.3s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .big-button:hover {
+            transform: scale(1.1);
+            background-color: #FF3D00;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+            accent-color: #FF5722;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .next-button {
+            padding: 12px 24px;
+            background-color: #FF5722;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transition: transform 0.3s ease-in-out;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .next-button.active {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .next-button.active:hover {
+            transform: scale(1.1);
+            background-color: #FF3D00;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 0;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s forwards;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px solid #FF5722;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease; /* Плавное приближение для списка */
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul:hover {
+            transform: scale(1.02); /* Легкое приближение при наведении на весь список */
+        }
+
+        #generatedKey {
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+        }
+
+        .key-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .key-container button {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="startSection">
+        <h1>Давайте начнем играть в SlavikVanilla!</h1>
+        <p>Нажмите на кнопку, чтобы начать!</p>
+        <a href="#" class="big-button" id="startButton">Начнем</a>
+    </div>
+
+    <div class="container hidden" id="rulesSection">
+        <h1>Ознакомьтесь с правилами</h1>
+        <p>Прежде чем начать, ознакомьтесь с правилами сервера:</p>
+        <ul>
+            <li>Не использовать читы и баги.</li>
+            <li>Не оскорблять других игроков.</li>
+            <li>Уважать администраторов и модераторов.</li>
+            <li>Не рекламировать другие серверы.</li>
+            <li>Не нарушать авторские права.</li>
+        </ul>
+        <div class="checkbox-container">
+            <input type="checkbox" id="agreeCheckbox">
+            <label for="agreeCheckbox">Я ознакомился(ась) с правилами и буду их соблюдать.</label>
+        </div>
+        <button class="next-button" id="nextButton" disabled>Далее</button>
+    </div>
+
+    <div class="container hidden" id="keySection">
+        <h1>Чтобы начать играть</h1>
+        <p>Пришлите администратору ключ присоединения к серверу.</p>
+        <div class="key-container">
+            <p id="key" class="bg-gray-800 p-4 rounded-lg text-xl font-mono inline-block">Ключ: <span id="generatedKey"></span></p>
+            <button id="copyKey" class="big-button">Скопировать</button>
+        </div>
+        <a href="https://t.me/slavakolch" target="_blank" class="big-button">Отправить ключ</a>
+    </div>
+
+    <script>
+        document.getElementById("startButton").addEventListener("click", function() {
+            document.getElementById("startSection").classList.add("hidden");  // Скрываем начальный текст
+            document.getElementById("rulesSection").classList.remove("hidden");
+        });
+
+        document.getElementById("agreeCheckbox").addEventListener("change", function() {
+            const nextButton = document.getElementById("nextButton");
+            if (this.checked) {
+                nextButton.classList.add("active");
+                nextButton.disabled = false;
+            } else {
+                nextButton.classList.remove("active");
+                nextButton.disabled = true;
+            }
+        });
+
+        document.getElementById("nextButton").addEventListener("click", function() {
+            document.getElementById("keySection").classList.remove("hidden");
+            document.getElementById("rulesSection").classList.add("hidden");
+            generateKey();
+        });
+
+        function generateKey() {
+            const key = Math.random().toString(36).substr(2, 8).toUpperCase();
+            document.getElementById("generatedKey").innerText = key;
+        }
+
+        document.getElementById("copyKey").addEventListener("click", function() {
+            const keyText = document.getElementById("generatedKey").innerText;
+            navigator.clipboard.writeText(keyText).then(function() {
+                alert("Ключ скопирован в буфер обмена!");
+            });
+        });
+    </script>
+</body>
+</html>
